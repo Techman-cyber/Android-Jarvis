@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main">
+
+    <!-- Top bar -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="J A R V I S"
+        android:textColor="@color/jarvis_accent"
+        android:textSize="20sp"
+        android:letterSpacing="0.22"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/pill_button_bg"
+        android:text="⚙"
+        android:textColor="@color/jarvis_accent"
+        android:textSize="18sp"
+        android:insetLeft="0dp"
+        android:insetRight="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp" />
+
+    <!-- Center HUD mic cluster -->
+    <RelativeLayout
+        android:id="@+id/micCluster"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="-40dp">
+
+        <ImageView
+            android:id="@+id/outerRing"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ring_outer"
+            android:contentDescription="@null" />
+
+        <ImageView
+            android:id="@+id/innerRing"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ring_inner"
+            android:contentDescription="@null" />
+
+        <Button
+            android:id="@+id/micButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/mic_button_bg"
+            android:text="🎤"
+            android:textSize="42sp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/micLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/micCluster"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:text="TAP TO SPEAK"
+        android:textColor="@color/jarvis_text_dim"
+        android:letterSpacing="0.18"
+        android:textSize="12sp" />
+
+    <!-- HUD status readout -->
+    <LinearLayout
+        android:id="@+id/statusBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/micLabel"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        android:background="@drawable/hud_box_bg"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STATUS"
+            android:textColor="@color/jarvis_accent"
+            android:textSize="10sp"
+            android:letterSpacing="0.2"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="System ready."
+            android:textColor="@color/jarvis_text"
+            android:fontFamily="monospace"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Bottom controls -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/wakeToggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/pill_button_bg"
+            android:text="START WAKE-WORD LISTENING"
+            android:textColor="@color/jarvis_accent"
+            android:textSize="13sp"
+            android:letterSpacing="0.05"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

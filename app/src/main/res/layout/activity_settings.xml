@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S E T T I N G S"
+            android:textColor="@color/jarvis_accent"
+            android:textSize="20sp"
+            android:letterSpacing="0.18"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Core config card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="18dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GEMINI API KEY"
+                android:textColor="@color/jarvis_text_dim"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.08"
+                android:textSize="11sp"
+                android:layout_marginBottom="8dp" />
+            <EditText
+                android:id="@+id/apiKeyField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Paste your Gemini API key"
+                android:textColorHint="@color/jarvis_text_dim"
+                android:textColor="@color/jarvis_text"
+                android:background="@drawable/edittext_bg"
+                android:inputType="textPassword"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WAKE WORD"
+                android:textColor="@color/jarvis_text_dim"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.08"
+                android:textSize="11sp"
+                android:layout_marginBottom="8dp" />
+            <EditText
+                android:id="@+id/wakeWordField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="jarvis"
+                android:textColorHint="@color/jarvis_text_dim"
+                android:textColor="@color/jarvis_text"
+                android:background="@drawable/edittext_bg"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADDRESS ME AS"
+                android:textColor="@color/jarvis_text_dim"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.08"
+                android:textSize="11sp"
+                android:layout_marginBottom="8dp" />
+            <Spinner
+                android:id="@+id/honorificSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="@drawable/edittext_bg"
+                android:popupBackground="@drawable/card_bg"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VOICE GENDER"
+                android:textColor="@color/jarvis_text_dim"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.08"
+                android:textSize="11sp"
+                android:layout_marginBottom="8dp" />
+            <Spinner
+                android:id="@+id/voiceGenderSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="@drawable/edittext_bg"
+                android:popupBackground="@drawable/card_bg"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/testVoiceButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/pill_button_bg"
+                android:text="🔊  TEST VOICE"
+                android:textColor="@color/jarvis_accent"
+                android:textSize="13sp"
+                android:letterSpacing="0.05" />
+        </LinearLayout>
+
+        <!-- Contact aliases card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="18dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTACT ALIASES"
+                android:textColor="@color/jarvis_accent"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.08"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="e.g. say &quot;boss&quot; to call &quot;John Smith&quot;"
+                android:textColor="@color/jarvis_text_dim"
+                android:textSize="12sp"
+                android:layout_marginBottom="14dp" />
+
+            <EditText
+                android:id="@+id/aliasNameField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alias (e.g. boss)"
+                android:textColorHint="@color/jarvis_text_dim"
+                android:textColor="@color/jarvis_text"
+                android:background="@drawable/edittext_bg"
+                android:layout_marginBottom="10dp" />
+            <EditText
+                android:id="@+id/aliasContactField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Real contact name (e.g. John Smith)"
+                android:textColorHint="@color/jarvis_text_dim"
+                android:textColor="@color/jarvis_text"
+                android:background="@drawable/edittext_bg"
+                android:layout_marginBottom="12dp" />
+            <Button
+                android:id="@+id/addAliasButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/pill_button_bg"
+                android:text="+  ADD ALIAS"
+                android:textColor="@color/jarvis_accent"
+                android:textSize="13sp"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="14dp" />
+
+            <TextView
+                android:id="@+id/aliasListText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/jarvis_text_dim"
+                android:fontFamily="monospace"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/mic_button_bg"
+            android:text="SAVE"
+            android:textColor="@color/jarvis_accent"
+            android:textSize="15sp"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp" />
+
+    </LinearLayout>
+</ScrollView>
