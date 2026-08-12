@@ -26,14 +26,14 @@ jobs:
           yes | sdkmanager --licenses || true
           sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools"
 
-      - name: Generate Gradle wrapper
-        run: gradle wrapper --gradle-version 8.7
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Download Gradle 8.7
+        run: |
+          curl -L -o gradle.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip -q gradle.zip -d "$HOME"
+          echo "$HOME/gradle-8.7/bin" >> "$GITHUB_PATH"
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
