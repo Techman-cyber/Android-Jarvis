@@ -22,20 +22,6 @@ import com.jarvis.android.R
 import com.jarvis.android.tts.VoiceSpeaker
 import com.jarvis.android.util.Prefs
 
-/**
- * Always-on "Jarvis" wake-word listener.
- *
- * Runs as a foreground service (required by Android for background mic use)
- * and keeps a SpeechRecognizer session alive continuously, restarting it
- * every time it ends. When the transcript contains the configured wake word
- * ("jarvis" by default), it acknowledges and switches into a short
- * command-capture window, then routes the captured command through
- * CommandRouter and returns to wake-word listening.
- *
- * Note: Android's on-device SpeechRecognizer requires network for the
- * highest accuracy on many devices and will show a brief system mic
- * indicator while active — that's expected platform behavior, not a bug.
- */
 class WakeWordService : Service() {
 
     companion object {
@@ -50,6 +36,7 @@ class WakeWordService : Service() {
     private val mainHandler = Handler(Looper.getMainLooper())
     private var state = STATE_WAKE
     private var isDestroyed = false
+    private var wakeHandledThisSession = false
 
     private lateinit var prefs: Prefs
     private lateinit var router: CommandRouter
@@ -93,6 +80,7 @@ class WakeWordService : Service() {
             Log.e(TAG, "Speech recognition not available on this device")
             return
         }
+        wakeHandledThisSession = false
         recognizer?.destroy()
         recognizer = SpeechRecognizer.createSpeechRecognizer(this).apply {
             setRecognitionListener(listener)
@@ -123,22 +111,22 @@ class WakeWordService : Service() {
         override fun onEndOfSpeech() {}
 
         override fun onError(error: Int) {
-            // ERROR_NO_MATCH / ERROR_SPEECH_TIMEOUT are the normal "silence" case
-            // in an always-on loop — just listen again immediately.
             restartSoon()
         }
 
         override fun onPartialResults(partialResults: Bundle?) {
-            if (state != STATE_WAKE) return
+            if (state != STATE_WAKE || wakeHandledThisSession) return
             val text = partialResults
                 ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 ?.firstOrNull()?.lowercase() ?: return
             if (text.contains(prefs.wakeWord)) {
+                wakeHandledThisSession = true
                 onWakeWordDetected(text)
             }
         }
 
         override fun onResults(results: Bundle?) {
+            if (wakeHandledThisSession) return
             val text = results
                 ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 ?.firstOrNull()?.lowercase().orEmpty()
@@ -146,6 +134,7 @@ class WakeWordService : Service() {
             when (state) {
                 STATE_WAKE -> {
                     if (text.contains(prefs.wakeWord)) {
+                        wakeHandledThisSession = true
                         onWakeWordDetected(text)
                     } else {
                         restartSoon(150)
@@ -166,21 +155,22 @@ class WakeWordService : Service() {
     }
 
     private fun onWakeWordDetected(heardText: String) {
-        // If the wake word was followed by more speech in the same utterance
-        // ("jarvis what time is it"), use the remainder directly as the command.
         val remainder = heardText.substringAfter(prefs.wakeWord).trim()
-        recognizer?.stopListening()
+
+        recognizer?.cancel()
         state = STATE_COMMAND
-        updateNotification("Yes?")
 
         if (remainder.length > 2) {
             state = STATE_WAKE
+            updateNotification("Yes?")
             router.handle(remainder)
             updateNotification("Listening for \"${prefs.wakeWord}\"")
             restartSoon(600)
         } else {
-            speaker.speak("Yes?")
-            restartSoon(500)
+            updateNotification("Yes?")
+            val honorificWord = if (prefs.honorific == "maam") "ma'am" else "sir"
+            speaker.speak("Yes, $honorificWord?")
+            restartSoon(1400)
         }
     }
 
