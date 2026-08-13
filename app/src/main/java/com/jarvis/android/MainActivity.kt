@@ -34,6 +34,13 @@ class MainActivity : AppCompatActivity() {
         arrayOf(Manifest.permission.POST_NOTIFICATIONS)
     } else emptyArray()
 
+    // Only these are actually needed to start the wake-word service. Contacts/call
+    // permissions are nice-to-have (for "call X") but must never block mic listening.
+    private val wakeServicePermissions = arrayOf(Manifest.permission.RECORD_AUDIO) +
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+        } else emptyArray()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -94,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleWakeService() {
-        val missing = requiredPermissions.filter {
+        val missing = wakeServicePermissions.filter {
             ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
         }
         if (missing.isNotEmpty()) {
